@@ -61,6 +61,7 @@ const int = (e: E, int: number) => {
 };
 
 const list = (e: E, list: unknown[]) => {
+  list = list.filter((e) => typeof e !== "undefined");
   if (list.length > 0) {
     u8(e, list_ext);
     u32(e, list.length);
@@ -72,12 +73,12 @@ const list = (e: E, list: unknown[]) => {
 };
 
 const map = (e: E, map: any) => {
-  const keys = Object.keys(map);
+  const entries = Object.entries(map).filter((e) => typeof e[1] !== "undefined");
   u8(e, map_ext);
-  u32(e, keys.length);
-  for (let i = 0, k = keys[i]; i < keys.length; k = keys[++i]) {
-    pack_value(e, k);
-    pack_value(e, map[k]);
+  u32(e, entries.length);
+  for (let i = 0, k = entries[i]; i < entries.length; k = entries[++i]) {
+    pack_value(e, k[0]);
+    pack_value(e, k[1]);
   }
 };
 
