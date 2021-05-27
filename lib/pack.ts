@@ -99,6 +99,7 @@ const pack_value = (e: E, value: unknown) => {
       ? value.constructor === Array ? list(e, value) : map(e, value)
       : small_atom(e, nil_utf8);
     case "string": return string(e, value);
+    case "undefined": return;
     default: throw new Error(`Unsupported type '${typeof value}'`);
   }
 };
